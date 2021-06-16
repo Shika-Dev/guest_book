@@ -56,9 +56,9 @@ class EntryFormState extends State<EntryForm> {
 
     //rubah
     return Scaffold(
-        backgroundColor: Color(0xffD34C59),
+        backgroundColor: Color(0xff2C977D),
         appBar: AppBar(
-          backgroundColor: Color(0xffD34C59),
+          backgroundColor: Color(0xff2C977D),
           elevation: 0,
         ),
         body: Column(
@@ -105,10 +105,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -128,10 +128,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -151,10 +151,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -174,10 +174,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -197,10 +197,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -220,10 +220,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -243,10 +243,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -266,10 +266,10 @@ class EntryFormState extends State<EntryForm> {
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(27),
+                            borderRadius: BorderRadius.circular(16),
                           ),
                         ),
                         onChanged: (value) {
@@ -286,16 +286,16 @@ class EntryFormState extends State<EntryForm> {
                             shape: MaterialStateProperty.all<
                                     RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27),
+                                    borderRadius: BorderRadius.circular(16),
                                     side:
-                                        BorderSide(color: Color(0xff707070))
+                                        BorderSide(color: Color(0xff2C977D))
                                 )
                             ),
-                          backgroundColor: MaterialStateProperty.all(Color(0xff40284A))
+                          backgroundColor: MaterialStateProperty.all(Color(0xff2C977D))
                         ),
                         child: Text(
                           'Simpan', style: TextStyle(color: Colors.white),
-                          textScaleFactor: 1.5,
+                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           if (guest == null) {
@@ -335,16 +335,16 @@ class EntryFormState extends State<EntryForm> {
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(27),
+                                    borderRadius: BorderRadius.circular(16),
                                     side:
-                                    BorderSide(color: Color(0xff707070))
+                                    BorderSide(color: Color(0xff2C977D))
                                 )
                             ),
                             backgroundColor: MaterialStateProperty.all(Colors.white)
                         ),
                         child: Text(
-                          'Cancel', style: TextStyle(color: Color(0xff40284A)),
-                          textScaleFactor: 1.5,
+                          'Cancel', style: TextStyle(color: Color(0xff2C977D)),
+                          textScaleFactor: 1,
                         ),
                         onPressed: () {
                           Navigator.pop(context, guest);

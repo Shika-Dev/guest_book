@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:csv/csv.dart';
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -43,7 +44,7 @@ getCsv(List associateList) async {
 
 //store file in documents folder
 
-    String dir = (await getExternalStorageDirectory()).absolute.path + "/documents";
+    String dir = (await getExternalStorageDirectory()).absolute.path;
     var file = "$dir";
     File f = new File(file+"filename.csv");
 
@@ -51,8 +52,7 @@ getCsv(List associateList) async {
 
     String csv = const ListToCsvConverter().convert(rows);
     f.writeAsString(csv);
-
-    print('Success Create a file at $file/filename.csv');
+    print('success export');
   }
 
 

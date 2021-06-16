@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: C:/flutter/.pub-cache/hosted/pub.dartlang.org/sqlitetoexcel-0.0.1/android/libs/sqlite2xl.aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f68107f225763f1922bfca9ead6f6ff8/jetified-sqlite2xl/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f68107f225763f1922bfca9ead6f6ff8/jetified-sqlite2xl/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f68107f225763f1922bfca9ead6f6ff8/jetified-sqlite2xl/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
