@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'package:guest_book_app/UI/ui_add.dart';
+import 'package:guest_book_app/UI/ui_filter.dart';
 import 'package:guest_book_app/Utils/csv_convert.dart';
 import 'package:guest_book_app/model/model.dart';
 import 'package:guest_book_app/helper/database.dart';
@@ -36,6 +37,11 @@ class HomeState extends State<Homepage> {
         actions: [
           IconButton(icon: Icon(Icons.search), onPressed: (){
             showSearch(context: context, delegate: DataSearch());
+          }),
+          IconButton(icon: Icon(Icons.filter_alt_rounded), onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(
+                    builder: (_) => Filter()));
           })
         ],
       ),
@@ -167,6 +173,7 @@ class DataSearch extends SearchDelegate<String>
   int count = 0;
   List<Guest> guestList;
 
+
   @override
   List<Widget> buildActions(BuildContext context) {
     return [IconButton(icon: Icon(Icons.clear), onPressed: (){
@@ -195,6 +202,9 @@ class DataSearch extends SearchDelegate<String>
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if(guestList==null){
+      guestList = List<Guest>();
+    }
     updateListView();
     final suggestionList = query.isEmpty
         ?guestList
