@@ -202,54 +202,58 @@ class HomeState extends State<Homepage> {
                                               ],
                                             ),
                                             SizedBox(height: 20),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                minimumSize: Size(
-                                                    size.width * .44, 44),
-                                                primary: Colors.white,
-                                                onPrimary: Colors.white,
-                                                side: BorderSide(
-                                                  color: Color(0xff2C977D),
-                                                ),
-                                              ),
-                                              onPressed: () {
-                                                Filter(1, guestList);
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                '1 Minggu Terakhir',
-                                                style: textStyle.copyWith(
-                                                    fontWeight:
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    minimumSize: Size(
+                                                        size.width * .40, 44),
+                                                    primary: Colors.white,
+                                                    onPrimary: Colors.white,
+                                                    side: BorderSide(
+                                                      color: Color(0xff2C977D),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Filter(1, guestList);
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    '1 Minggu Terakhir',
+                                                    style: textStyle.copyWith(
+                                                        fontWeight:
                                                         FontWeight.w700,
-                                                    color: Color(0xff2C977D)),
-                                              ),
-                                            ),
-                                            SizedBox(height: 10),
-                                            ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                minimumSize: Size(
-                                                    size.width * .44, 44),
-                                                primary: Colors.white,
-                                                side: BorderSide(
-                                                  color: Color(0xff2C977D),
+                                                        color: Color(0xff2C977D)),
+                                                  ),
                                                 ),
-                                              ),
-                                              onPressed: () {
-                                                Filter(2, guestList);
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                '1 Bulan Terakhir',
-                                                style: textStyle.copyWith(
-                                                    fontWeight:
+                                                ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    minimumSize: Size(
+                                                        size.width * .40, 44),
+                                                    primary: Colors.white,
+                                                    side: BorderSide(
+                                                      color: Color(0xff2C977D),
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Filter(2, guestList);
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text(
+                                                    '1 Bulan Terakhir',
+                                                    style: textStyle.copyWith(
+                                                        fontWeight:
                                                         FontWeight.w700,
-                                                    color: Color(0xff2C977D)),
-                                              ),
+                                                        color: Color(0xff2C977D)),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(height: 20),
+                                            SizedBox(height: size.height*.03),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
+                                                  MainAxisAlignment.spaceAround,
                                               children: [
                                                 Container(
                                                   width: size.width * .4,
@@ -257,12 +261,12 @@ class HomeState extends State<Homepage> {
                                                     decoration: InputDecoration(
                                                       filled: true,
                                                       fillColor: Colors.white,
+                                                      contentPadding: EdgeInsets.symmetric(vertical: 0),
                                                       border:
                                                           OutlineInputBorder(
                                                               borderRadius:
                                                                   BorderRadius
-                                                                      .circular(
-                                                                          16),
+                                                                      .circular(8),
                                                               borderSide:
                                                                   BorderSide
                                                                       .none),
@@ -298,14 +302,14 @@ class HomeState extends State<Homepage> {
                                                   width: size.width * .4,
                                                   child: DateTimePicker(
                                                     decoration: InputDecoration(
+                                                      contentPadding: EdgeInsets.symmetric(vertical: 0),
                                                       filled: true,
                                                       fillColor: Colors.white,
                                                       border:
                                                           OutlineInputBorder(
                                                               borderRadius:
                                                                   BorderRadius
-                                                                      .circular(
-                                                                          16),
+                                                                      .circular(8),
                                                               borderSide:
                                                                   BorderSide
                                                                       .none),
@@ -579,7 +583,10 @@ class HomeState extends State<Homepage> {
               style: TextStyle(color: Colors.white),
               textScaleFactor: 1,
             ),
-            onPressed: () {},
+            onPressed: () async {
+              var guest = await navigateToEntryForm(context, null);
+              if (guest != null) addguest(guest);
+            },
           ),
         ),
       ],
