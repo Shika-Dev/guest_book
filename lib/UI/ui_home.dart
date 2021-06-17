@@ -528,7 +528,7 @@ class HomeState extends State<Homepage> {
         });
       } else {
         List<Guest> result =
-            object.where((element) => element.name.contains(query)).toList();
+            object.where((element) => element.name.contains(query.toLowerCase())).toList();
         if (result.isNotEmpty) {
           setState(() {
             this.guestList = result;
