@@ -46,7 +46,7 @@ class HomeState extends State<Homepage> {
     if (notif == true) {
       Future.delayed(
         Duration(microseconds: 100),
-            () {
+        () {
           Flushbar(
             flushbarPosition: FlushbarPosition.TOP,
             borderRadius: BorderRadius.circular(8),
@@ -88,13 +88,35 @@ class HomeState extends State<Homepage> {
           height: size.height * .15,
           width: size.width,
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                Color(0xff1B9376).withOpacity(1),
-                Color(0xff0E6B55).withOpacity(0)
-              ])),
+            gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [
+                  Color(0xff1B9376).withOpacity(1),
+                  Color(0xff0E6B55).withOpacity(0)
+                ]),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey,
+                offset: Offset(0.0, 1.0), //(x,y)
+                blurRadius: 6.0,
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                bottom: 16,
+                left: 16,
+                child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      'Form Asnaf',
+                      style: headlineStyle,
+                    )),
+              ),
+            ],
+          ),
         ),
         Positioned(
           top: 0,
@@ -109,276 +131,370 @@ class HomeState extends State<Homepage> {
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
-            body: Column(
+            body: ListView(
               children: [
-                SizedBox(height: size.height * .07),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: size.width * .6,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                                offset: Offset(0, 4),
-                                blurRadius: 4,
-                                color: Colors.black.withOpacity(.25))
-                          ]),
-                      child: TextFormField(
-                        controller: _search,
-                        decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Color(0xffe5e5e5),
-                            suffixIcon: Icon(Icons.search, color: Colors.black),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide.none),
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 3, horizontal: 16)),
-                        onChanged: (p) {
-                          Search(p, guestList);
-                        },
-                      ),
-                    ),
-                    SizedBox(width: size.width * .03),
-                    CircleAvatar(
-                      child: _filterStatus
-                          ? IconButton(
-                              icon: Icon(
-                                Icons.highlight_remove_outlined,
-                                color: Colors.black,
-                              ),
-                              color: Color(0xffe5e5e5),
-                              onPressed: () {
-                                setState(() {
-                                  this._filterStatus=false;
-                                });
-                                updateListView();
-                              },
-                            )
-                          : IconButton(
-                              icon: Icon(
-                                Icons.filter_list_outlined,
-                                color: Colors.black,
-                              ),
-                              color: Color(0xffe5e5e5),
-                              onPressed: () {
-                                showModalBottomSheet<void>(
-                                  backgroundColor: Color(0xff2C977D),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: const Radius.circular(24.0),
-                                        topRight: const Radius.circular(24.0)),
+                guestList.length == 0
+                    ? Container(height: size.height * 0.8, child: _noResult())
+                    : Container(
+                        height: size.height * 0.87,
+                        child: Column(
+                          children: [
+                            SizedBox(height: size.height * .07),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    width: size.width * .6,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: TextFormField(
+                                      controller: _search,
+                                      decoration: InputDecoration(
+                                          filled: true,
+                                          fillColor: Color(0xffe5e5e5),
+                                          suffixIcon: Icon(Icons.search,
+                                              color: Colors.black),
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              borderSide: BorderSide.none),
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 3, horizontal: 16)),
+                                      onChanged: (p) {
+                                        Search(p, guestList);
+                                      },
+                                    ),
                                   ),
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
-                                      child: Container(
-                                        padding: EdgeInsets.all(16),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  'Filter',
-                                                  style: headlineStyle,
-                                                ),
-                                                IconButton(
-                                                    icon: Icon(
-                                                      Icons
-                                                          .highlight_remove_outlined,
-                                                      color: Colors.white,
-                                                    ),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    })
-                                              ],
+                                  SizedBox(width: size.width * .03),
+                                  CircleAvatar(
+                                    child: _filterStatus
+                                        ? IconButton(
+                                            icon: Icon(
+                                              Icons.highlight_remove_outlined,
+                                              color: Colors.black,
                                             ),
-                                            SizedBox(height: 20),
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                ElevatedButton(
-                                                  style: ElevatedButton.styleFrom(
-                                                    minimumSize: Size(
-                                                        size.width * .40, 44),
-                                                    primary: Colors.white,
-                                                    onPrimary: Colors.white,
-                                                    side: BorderSide(
-                                                      color: Color(0xff2C977D),
-                                                    ),
-                                                  ),
-                                                  onPressed: () {
-                                                    Filter(1, guestList);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text(
-                                                    '1 Minggu Terakhir',
-                                                    style: textStyle.copyWith(
-                                                        fontWeight:
-                                                        FontWeight.w700,
-                                                        color: Color(0xff2C977D)),
-                                                  ),
-                                                ),
-                                                ElevatedButton(
-                                                  style: ElevatedButton.styleFrom(
-                                                    minimumSize: Size(
-                                                        size.width * .40, 44),
-                                                    primary: Colors.white,
-                                                    side: BorderSide(
-                                                      color: Color(0xff2C977D),
-                                                    ),
-                                                  ),
-                                                  onPressed: () {
-                                                    Filter(2, guestList);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text(
-                                                    '1 Bulan Terakhir',
-                                                    style: textStyle.copyWith(
-                                                        fontWeight:
-                                                        FontWeight.w700,
-                                                        color: Color(0xff2C977D)),
-                                                  ),
-                                                ),
-                                              ],
+                                            color: Color(0xffe5e5e5),
+                                            onPressed: () {
+                                              setState(() {
+                                                this._filterStatus = false;
+                                              });
+                                              updateListView();
+                                            },
+                                          )
+                                        : IconButton(
+                                            icon: Icon(
+                                              Icons.filter_list_outlined,
+                                              color: Colors.black,
                                             ),
-                                            SizedBox(height: size.height*.03),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                  width: size.width * .4,
-                                                  child: DateTimePicker(
-                                                    decoration: InputDecoration(
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      contentPadding: EdgeInsets.symmetric(vertical: 0),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(8),
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
+                                            color: Color(0xffe5e5e5),
+                                            onPressed: () {
+                                              showModalBottomSheet<void>(
+                                                backgroundColor:
+                                                    Color(0xff2C977D),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft: const Radius
+                                                              .circular(24.0),
+                                                          topRight: const Radius
+                                                              .circular(24.0)),
+                                                ),
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Container(
+                                                    child: Container(
+                                                      padding:
+                                                          EdgeInsets.all(16),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              Text(
+                                                                'Filter',
+                                                                style:
+                                                                    headlineStyle,
+                                                              ),
+                                                              IconButton(
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .highlight_remove_outlined,
+                                                                    color: Colors
+                                                                        .white,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  })
+                                                            ],
+                                                          ),
+                                                          SizedBox(height: 20),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: [
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  minimumSize: Size(
+                                                                      size.width *
+                                                                          .40,
+                                                                      44),
+                                                                  primary: Colors
+                                                                      .white,
+                                                                  onPrimary:
+                                                                      Colors
+                                                                          .white,
+                                                                  side:
+                                                                      BorderSide(
+                                                                    color: Color(
+                                                                        0xff2C977D),
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  Filter(1,
+                                                                      guestList);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Text(
+                                                                  '1 Minggu Terakhir',
+                                                                  style: textStyle.copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color: Color(
+                                                                          0xff2C977D)),
+                                                                ),
+                                                              ),
+                                                              ElevatedButton(
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  minimumSize: Size(
+                                                                      size.width *
+                                                                          .40,
+                                                                      44),
+                                                                  primary: Colors
+                                                                      .white,
+                                                                  side:
+                                                                      BorderSide(
+                                                                    color: Color(
+                                                                        0xff2C977D),
+                                                                  ),
+                                                                ),
+                                                                onPressed: () {
+                                                                  Filter(2,
+                                                                      guestList);
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Text(
+                                                                  '1 Bulan Terakhir',
+                                                                  style: textStyle.copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w700,
+                                                                      color: Color(
+                                                                          0xff2C977D)),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                              height:
+                                                                  size.height *
+                                                                      .03),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceAround,
+                                                            children: [
+                                                              Container(
+                                                                width:
+                                                                    size.width *
+                                                                        .4,
+                                                                child:
+                                                                    DateTimePicker(
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    filled:
+                                                                        true,
+                                                                    fillColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    contentPadding:
+                                                                        EdgeInsets.symmetric(
+                                                                            vertical:
+                                                                                0),
+                                                                    border: OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8),
+                                                                        borderSide:
+                                                                            BorderSide.none),
+                                                                  ),
+                                                                  style: TextStyle(
+                                                                      color: Color(
+                                                                          0xff2C977D)),
+                                                                  initialValue:
+                                                                      '',
+                                                                  firstDate:
+                                                                      DateTime(
+                                                                          2000),
+                                                                  lastDate:
+                                                                      DateTime(
+                                                                          2100),
+                                                                  onSaved:
+                                                                      (val) {
+                                                                    setState(
+                                                                        () {
+                                                                      firstDate =
+                                                                          val as DateTime;
+                                                                    });
+                                                                  },
+                                                                  selectableDayPredicate:
+                                                                      (date) {
+                                                                    // Disable weekend days to select from the calendar
+                                                                    if (date.isAfter(
+                                                                        DateTime
+                                                                            .now())) {
+                                                                      return false;
+                                                                    }
+                                                                    return true;
+                                                                  },
+                                                                ),
+                                                              ),
+                                                              Text('S/D',
+                                                                  style: headlineStyle
+                                                                      .copyWith(
+                                                                          fontSize:
+                                                                              16)),
+                                                              Container(
+                                                                width:
+                                                                    size.width *
+                                                                        .4,
+                                                                child:
+                                                                    DateTimePicker(
+                                                                  decoration:
+                                                                      InputDecoration(
+                                                                    contentPadding:
+                                                                        EdgeInsets.symmetric(
+                                                                            vertical:
+                                                                                0),
+                                                                    filled:
+                                                                        true,
+                                                                    fillColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    border: OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                8),
+                                                                        borderSide:
+                                                                            BorderSide.none),
+                                                                  ),
+                                                                  style: TextStyle(
+                                                                      color: Color(
+                                                                          0xff2C977D)),
+                                                                  initialValue:
+                                                                      '',
+                                                                  firstDate:
+                                                                      DateTime(
+                                                                          2000),
+                                                                  lastDate:
+                                                                      DateTime(
+                                                                          2100),
+                                                                  onSaved:
+                                                                      (val) {
+                                                                    setState(
+                                                                        () {
+                                                                      secondDate =
+                                                                          val as DateTime;
+                                                                    });
+                                                                  },
+                                                                  selectableDayPredicate:
+                                                                      (date) {
+                                                                    // Disable weekend days to select from the calendar
+                                                                    if (date.isAfter(
+                                                                        DateTime
+                                                                            .now())) {
+                                                                      return false;
+                                                                    }
+                                                                    return true;
+                                                                  },
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                          SizedBox(height: 10),
+                                                          Center(
+                                                            child:
+                                                                ElevatedButton(
+                                                              style:
+                                                                  ElevatedButton
+                                                                      .styleFrom(
+                                                                minimumSize: Size(
+                                                                    size.width *
+                                                                        .44,
+                                                                    44),
+                                                                primary: Colors
+                                                                    .white,
+                                                                side:
+                                                                    BorderSide(
+                                                                  color: Color(
+                                                                      0xff2C977D),
+                                                                ),
+                                                              ),
+                                                              onPressed: () {
+                                                                Filter(3,
+                                                                    guestList);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: Text(
+                                                                'TERPKAN',
+                                                                style: textStyle.copyWith(
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w700,
+                                                                    color: Color(
+                                                                        0xff2C977D)),
+                                                              ),
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
                                                     ),
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff2C977D)),
-                                                    initialValue: '',
-                                                    firstDate: DateTime(2000),
-                                                    lastDate: DateTime(2100),
-                                                    onSaved: (val) {
-                                                      setState(() {
-                                                        firstDate =
-                                                            val as DateTime;
-                                                      });
-                                                    },
-                                                    selectableDayPredicate:
-                                                        (date) {
-                                                      // Disable weekend days to select from the calendar
-                                                      if (date.isAfter(
-                                                          DateTime.now())) {
-                                                        return false;
-                                                      }
-                                                      return true;
-                                                    },
-                                                  ),
-                                                ),
-                                                Text('S/D',
-                                                    style:
-                                                        headlineStyle.copyWith(
-                                                            fontSize: 16)),
-                                                Container(
-                                                  width: size.width * .4,
-                                                  child: DateTimePicker(
-                                                    decoration: InputDecoration(
-                                                      contentPadding: EdgeInsets.symmetric(vertical: 0),
-                                                      filled: true,
-                                                      fillColor: Colors.white,
-                                                      border:
-                                                          OutlineInputBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(8),
-                                                              borderSide:
-                                                                  BorderSide
-                                                                      .none),
-                                                    ),
-                                                    style: TextStyle(
-                                                        color:
-                                                            Color(0xff2C977D)),
-                                                    initialValue: '',
-                                                    firstDate: DateTime(2000),
-                                                    lastDate: DateTime(2100),
-                                                    onSaved: (val) {
-                                                      setState(() {
-                                                        secondDate =
-                                                            val as DateTime;
-                                                      });
-                                                    },
-                                                    selectableDayPredicate:
-                                                        (date) {
-                                                      // Disable weekend days to select from the calendar
-                                                      if (date.isAfter(
-                                                          DateTime.now())) {
-                                                        return false;
-                                                      }
-                                                      return true;
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(height: 10),
-                                            Center(
-                                              child: ElevatedButton(
-                                                style:
-                                                    ElevatedButton.styleFrom(
-                                                  minimumSize: Size(
-                                                      size.width * .44, 44),
-                                                  primary: Colors.white,
-                                                  side: BorderSide(
-                                                    color: Color(0xff2C977D),
-                                                  ),
-                                                ),
-                                                onPressed: () {
-                                                  Filter(3, guestList);
-                                                  Navigator.pop(context);
+                                                  );
                                                 },
-                                                child: Text(
-                                                  'TERPKAN',
-                                                  style: textStyle.copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color:
-                                                          Color(0xff2C977D)),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
+                                              );
+                                            },
+                                          ),
+                                    backgroundColor: Color(0xffE5E5E5),
+                                  )
+                                ],
+                              ),
                             ),
-                      backgroundColor: Color(0xffE5E5E5),
-                    )
-                  ],
-                ),
-                SizedBox(height: size.height * .02),
-                Expanded(child: noResult ? _noResult() : createListView())
+                            SizedBox(height: size.height * .02),
+                            Expanded(
+                                child:
+                                    noResult ? _noResult() : createListView()),
+                          ],
+                        ),
+                      ),
               ],
             ),
             floatingActionButton: _getFAB()),
@@ -445,21 +561,20 @@ class HomeState extends State<Homepage> {
       children: [
         // FAB 1
         SpeedDialChild(
-            child: Icon(
-              Icons.add,
-              color: Colors.white,
-            ),
-            backgroundColor: Color(0xff50AC96),
-            onTap: () async {
-              var guest = await navigateToEntryForm(context, null);
-              if (guest != null) addguest(guest);
-            },
-            label: 'Add Data',
-            labelStyle: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
-                fontSize: 16.0),
-            labelBackgroundColor: Color(0xff50AC96)),
+          child: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          backgroundColor: Color(0xff50AC96),
+          label: 'Add Data',
+          labelStyle: TextStyle(
+              fontWeight: FontWeight.w500, color: Colors.white, fontSize: 16.0),
+          labelBackgroundColor: Color(0xff50AC96),
+          onTap: () async {
+            var guest = await navigateToEntryForm(context, null);
+            if (guest != null) addguest(guest);
+          },
+        ),
         // FAB 2
         SpeedDialChild(
             child: Icon(Icons.ios_share, color: Colors.white),
@@ -467,11 +582,13 @@ class HomeState extends State<Homepage> {
             onTap: () {
               getCsv(guestList);
               Navigator.pop(context);
-              Navigator.push(context,
+              Navigator.push(
+                  context,
                   MaterialPageRoute(
-                      builder: (_) => Homepage(notif: true, message: "Berhasil Disimpan di Android/data/com.example.guest_book_app/")
-                  )
-              );
+                      builder: (_) => Homepage(
+                          notif: true,
+                          message:
+                              "Berhasil Disimpan di Android/data/com.example.guest_book_app/")));
             },
             label: 'Export Data',
             labelStyle: TextStyle(
@@ -531,8 +648,9 @@ class HomeState extends State<Homepage> {
           this.noResult = true;
         });
       } else {
-        List<Guest> result =
-            object.where((element) => element.name.contains(query.toLowerCase())).toList();
+        List<Guest> result = object
+            .where((element) => element.name.contains(query.toLowerCase()))
+            .toList();
         if (result.isNotEmpty) {
           setState(() {
             this.guestList = result;
@@ -550,6 +668,8 @@ class HomeState extends State<Homepage> {
 
   Widget _noResult() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(height: MediaQuery.of(context).size.height * .05),
         Center(
@@ -608,7 +728,7 @@ class HomeState extends State<Homepage> {
         this.count = filtered.length;
         this._filterStatus = true;
       });
-      if(filtered==null){
+      if (filtered == null) {
         setState(() {
           this.noResult = true;
         });
@@ -623,7 +743,7 @@ class HomeState extends State<Homepage> {
         this.count = filtered.length;
         this._filterStatus = true;
       });
-      if(filtered==null){
+      if (filtered == null) {
         setState(() {
           this.noResult = true;
         });
@@ -631,14 +751,14 @@ class HomeState extends State<Homepage> {
     } else if (code == 3) {
       List<Guest> filtered = object.where((element) {
         DateTime date = formatDate.parse(element.tanggal);
-        return firstDate.isBefore(date)&&secondDate.isAfter((date));
+        return firstDate.isBefore(date) && secondDate.isAfter((date));
       }).toList();
       setState(() {
         this.guestList = filtered;
         this.count = filtered.length;
         this._filterStatus = true;
       });
-      if(filtered==null){
+      if (filtered == null) {
         setState(() {
           this.noResult = true;
         });
