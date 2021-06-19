@@ -5,6 +5,7 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:another_flushbar/flushbar.dart';
 
 import 'package:guest_book_app/UI/ui_add.dart';
+import 'package:guest_book_app/Utils/all_csv.dart';
 import 'package:guest_book_app/Utils/csv_convert.dart';
 import 'package:guest_book_app/model/model.dart';
 import 'package:guest_book_app/helper/database.dart';
@@ -338,7 +339,7 @@ class HomeState extends State<Homepage> {
                                                                     contentPadding:
                                                                         EdgeInsets.symmetric(
                                                                             vertical:
-                                                                                0),
+                                                                                0, horizontal: 16),
                                                                     border: OutlineInputBorder(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
@@ -393,7 +394,7 @@ class HomeState extends State<Homepage> {
                                                                     contentPadding:
                                                                         EdgeInsets.symmetric(
                                                                             vertical:
-                                                                                0),
+                                                                                0, horizontal: 16),
                                                                     filled:
                                                                         true,
                                                                     fillColor:
@@ -588,9 +589,22 @@ class HomeState extends State<Homepage> {
                       builder: (_) => Homepage(
                           notif: true,
                           message:
-                              "Berhasil Disimpan di Android/data/com.example.guest_book_app/")));
+                              "Berhasil Disimpan di Android/data/com.example.guest_book_app/files")));
             },
             label: 'Export Data',
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: Color(0xff50AC96)),
+        SpeedDialChild(
+            child: Icon(Icons.cloud_download_outlined, color: Colors.white),
+            backgroundColor: Color(0xff50AC96),
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => AllCsvFilesScreen()));
+            },
+            label: 'Import Data',
             labelStyle: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.white,

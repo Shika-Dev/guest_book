@@ -18,6 +18,7 @@ class EntryFormState extends State<EntryForm> {
   EntryFormState(this.guest);
 
   TextEditingController nameController = TextEditingController();
+  TextEditingController namaIstriController = TextEditingController();
   TextEditingController binController = TextEditingController();
   TextEditingController alm1Controller = TextEditingController();
   TextEditingController alm2Controller = TextEditingController();
@@ -102,6 +103,29 @@ class EntryFormState extends State<EntryForm> {
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           labelText: 'Nama Lengkap',
+                          labelStyle: TextStyle(color: Color(0xff40284A)),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xff40284A)),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          //
+                        },
+                      ),
+                    ),
+
+                    // nama Istri
+                    Padding(
+                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      child: TextField(
+                        controller: namaIstriController,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          labelText: 'Nama Istri',
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
@@ -301,6 +325,7 @@ class EntryFormState extends State<EntryForm> {
                           if (guest == null) {
                             guest = Guest(
                                 nameController.text,
+                                namaIstriController.text,
                                 binController.text,
                                 alm1Controller.text,
                                 alm2Controller.text,
@@ -313,6 +338,7 @@ class EntryFormState extends State<EntryForm> {
                           } else {
                             // ubah data
                             guest.name = nameController.text;
+                            guest.namaIstri = namaIstriController.text;
                             guest.bin = binController.text;
                             guest.alm1 = alm1Controller.text;
                             guest.alm2 = alm2Controller.text;

@@ -15,6 +15,7 @@ getCsv(List associateList) async {
     List<dynamic> row = List();
     if(i==0){
     row.add('Nama');
+    row.add('Nama Istri');
     row.add('Bin/Bnt');
     row.add('Almarhum');
     row.add('Almarhum');
@@ -26,6 +27,7 @@ getCsv(List associateList) async {
     rows.add(row);
   } else{
     row.add(associateList[i-1].name);
+    row.add(associateList[i-1].namaIstri);
     row.add(associateList[i-1].bin);
     row.add(associateList[i-1].alm1);
     row.add(associateList[i-1].alm2);
@@ -46,7 +48,8 @@ getCsv(List associateList) async {
 
     String dir = (await getExternalStorageDirectory()).absolute.path;
     var file = "$dir";
-    File f = new File(file+"filename.csv");
+    print(file);
+    File f = new File(file+"/${DateTime.now()}-backup.csv");
 
 // convert rows to String and write as csv file
 

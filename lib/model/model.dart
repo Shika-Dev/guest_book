@@ -1,6 +1,7 @@
 class Guest {
   int _id;
   String _name;
+  String _namaIstri;
   String _bin;
   String _alm1;
   String _alm2;
@@ -10,12 +11,13 @@ class Guest {
   String _besar;
   String _tanggal;
 
-  Guest(this._name, this._bin, this._alm1, this._alm2, this._alamat, this._telp, this._kali, this._besar, this._tanggal);
+  Guest(this._name, this._namaIstri, this._bin, this._alm1, this._alm2, this._alamat, this._telp, this._kali, this._besar, this._tanggal);
 
 
   Guest.fromMap(Map<String, dynamic> map) {
     this._id = map['id'];
     this._name = map['name'];
+    this._namaIstri = map['namaIstri'];
     this._bin = map['bin'];
     this._alm1 = map['alm1'];
     this._alm2 = map['alm2'];
@@ -28,6 +30,7 @@ class Guest {
 
   int get id => _id;
   String get name => _name;
+  String get namaIstri => _namaIstri;
   String get bin => _bin;
   String get alm1 => _alm1;
   String get alm2 => _alm2;
@@ -40,6 +43,10 @@ class Guest {
   // setter
   set name(String value) {
     _name = value;
+  }
+
+  set namaIstri(String value) {
+    _namaIstri = value;
   }
 
   set bin(String value) {
@@ -79,6 +86,7 @@ class Guest {
     Map<String, dynamic> map = Map<String, dynamic>();
     map['id'] = this._id;
     map['name'] = name;
+    map['namaIstri'] = namaIstri;
     map['bin'] = bin;
     map['alm1'] = alm1;
     map['alm2'] = alm2;

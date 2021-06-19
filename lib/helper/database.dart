@@ -41,6 +41,7 @@ class DbHelper {
       CREATE TABLE guest (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         name TEXT,
+        namaIstri TEXT,
         bin TEXT,
         alm1 TEXT,
         alm2 TEXT,
@@ -81,6 +82,10 @@ class DbHelper {
     return count;
   }
 
+  void deleteAll() async{
+    Database db = await this.database;
+    db.delete('guest');
+  }
 //delete databases
   Future<int> delete(int id) async {
     Database db = await this.database;
