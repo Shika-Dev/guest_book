@@ -33,7 +33,6 @@ class LoadCsvDataScreen extends StatelessWidget {
           List<dynamic> filteredList = snapshot.data
               .where((element) => snapshot.data.indexOf(element) != 0)
               .toList();
-          DbHelper().deleteAll();
           return snapshot.hasData
               ? Center(
                   child: ElevatedButton(
@@ -46,6 +45,7 @@ class LoadCsvDataScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+                    DbHelper().deleteAll();
                     List<Guest> guests = new List<Guest>();
                     for(int i=0;i<filteredList.length;i++){
                       guests.add(Guest(
