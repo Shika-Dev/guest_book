@@ -18,16 +18,20 @@ import 'dart:async';
 class Homepage extends StatefulWidget {
   final bool notif;
   final String message;
+  final List<Guest> guests;
+  final bool restore;
 
-  Homepage({Key key, this.notif = false, this.message = ''}) : super(key: key);
+  Homepage({Key key, this.notif = false, this.message = '', this.guests, this.restore=false}) : super(key: key);
   @override
-  HomeState createState() => HomeState(notif, message);
+  HomeState createState() => HomeState(notif, message, guests, restore);
 }
 
 class HomeState extends State<Homepage> {
   bool notif;
   String message;
-  HomeState(this.notif, this.message);
+  List<Guest> guests;
+  bool restore;
+  HomeState(this.notif, this.message, this.guests, this.restore);
 
   DbHelper dbHelper = DbHelper();
   int count = 0;
@@ -43,7 +47,10 @@ class HomeState extends State<Homepage> {
   void initState() {
     super.initState();
     updateListView();
-
+    if(restore == true){
+      print(guests);
+      addImportGuest(guests);
+    }
     if (notif == true) {
       Future.delayed(
         Duration(microseconds: 100),
@@ -79,7 +86,6 @@ class HomeState extends State<Homepage> {
     );
     if (guestList == null) {
       guestList = List<Guest>();
-      //this.noResult = true;
     }
 
     return Stack(
@@ -622,6 +628,10 @@ class HomeState extends State<Homepage> {
     }
   }
 
+  void addImportGuest(List<Guest> guests) async{
+    guests.forEach((element) {addguest(element);});
+  }
+
   //edit guest
   void editguest(Guest object) async {
     int result = await dbHelper.update(object);
@@ -648,6 +658,7 @@ class HomeState extends State<Homepage> {
           this.guestList = guestList;
           this.count = guestList.length;
         });
+        print(guestList.toString());
       });
     });
   }

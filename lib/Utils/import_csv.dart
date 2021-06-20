@@ -30,11 +30,9 @@ class LoadCsvDataScreen extends StatelessWidget {
       body: FutureBuilder(
         future: loadingCsvData(path),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          print(snapshot.data.toString());
           List<dynamic> filteredList = snapshot.data
               .where((element) => snapshot.data.indexOf(element) != 0)
               .toList();
-          print(filteredList);
           DbHelper().deleteAll();
           return snapshot.hasData
               ? Center(
@@ -48,22 +46,24 @@ class LoadCsvDataScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    filteredList.map((e) => Guest(
-                        e.data[0].toString(),
-                        e.data[1].toString(),
-                        e.data[2].toString(),
-                        e.data[3].toString(),
-                        e.data[4].toString(),
-                        e.data[5].toString(),
-                        e.data[6].toString(),
-                        e.data[7].toString(),
-                        e.data[8].toString(),
-                        e.data[9].toString())
-                    );
-                    print('Success add data');
+                    List<Guest> guests = new List<Guest>();
+                    for(int i=0;i<filteredList.length;i++){
+                      guests.add(Guest(
+                        filteredList[i][0].toString(),
+                        filteredList[i][1].toString(),
+                        filteredList[i][2].toString(),
+                        filteredList[i][3].toString(),
+                        filteredList[i][4].toString(),
+                        filteredList[i][5].toString(),
+                        filteredList[i][6].toString(),
+                        filteredList[i][7].toString(),
+                        filteredList[i][8].toString(),
+                        filteredList[i][9].toString(),
+                      ));
+                    }
                     Navigator.push(context,
                         MaterialPageRoute(
-                            builder: (_)=>Homepage(notif: true, message: 'Berhasi Import Data',)
+                            builder: (_)=>Homepage(notif: true, message: 'Berhasi Import Data', guests: guests, restore: true,)
                         ));
                   },
                   child: Text(
@@ -72,65 +72,6 @@ class LoadCsvDataScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700, color: Colors.white),
                   ),
                 ))
-              /*Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: snapshot.data
-                  .map(
-                    (data) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Text(
-                          data[0].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[1].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[2].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[3].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[4].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[5].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[6].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[7].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[8].toString(),
-                        ),
-                        SizedBox(width: 3),
-                        Text(
-                          data[9].toString(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
-                  .toList(),
-            ),
-          )*/
               : Center(
                   child: CircularProgressIndicator(),
                 );
