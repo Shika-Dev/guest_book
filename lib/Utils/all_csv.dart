@@ -40,7 +40,7 @@ class _AllCsvFilesScreenState extends State<AllCsvFilesScreen> {
                   snapshot.data[index].path.substring(44),
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                leading: IconButton(
+                trailing: IconButton(
                   icon: Icon(Icons.delete_outline, color: Colors.red),
                   onPressed: () async {
                     File _file = File(snapshot.data[index].path.toString());
