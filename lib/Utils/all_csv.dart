@@ -3,7 +3,12 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'import_csv.dart';
 
-class AllCsvFilesScreen extends StatelessWidget {
+class AllCsvFilesScreen extends StatefulWidget {
+  @override
+  _AllCsvFilesScreenState createState() => _AllCsvFilesScreenState();
+}
+
+class _AllCsvFilesScreenState extends State<AllCsvFilesScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +20,6 @@ class AllCsvFilesScreen extends StatelessWidget {
           if (!snapshot.hasData || snapshot.data.isEmpty) {
             return Text("empty");
           }
-          print('${snapshot.data.length} ${snapshot.data}');
           if (snapshot.data.length == 0) {
             return Center(
               child: Text('No Csv File found.'),
@@ -24,18 +28,34 @@ class AllCsvFilesScreen extends StatelessWidget {
           return ListView.builder(
             itemBuilder: (context, index) => Card(
               child: ListTile(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            LoadCsvDataScreen(path: snapshot.data[index].path),
-                      ),
-                    );
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) =>
+                          LoadCsvDataScreen(path: snapshot.data[index].path),
+                    ),
+                  );
+                },
+                title: Text(
+                  snapshot.data[index].path.substring(44),
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                leading: IconButton(
+                  icon: Icon(Icons.delete_outline, color: Colors.red),
+                  onPressed: () async {
+                    File _file = File(snapshot.data[index].path.toString());
+                    try {
+                      final file = await _file;
+                      await file.delete();
+                      setState(() {
+                        _getAllCsvFiles();
+                      });
+                    } catch (e) {
+                      print(e);
+                    }
                   },
-                  title: Text(
-                    snapshot.data[index].path.substring(44),
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
+                ),
+              ),
             ),
             itemCount: snapshot.data.length,
           );
@@ -48,7 +68,6 @@ class AllCsvFilesScreen extends StatelessWidget {
     final String directory = (await getExternalStorageDirectory()).absolute.path;
     final path = "$directory";
     final myDir = Directory(path);
-    print(path);
     List<FileSystemEntity> _csvFiles;
     _csvFiles = myDir.listSync(recursive: true, followLinks: false);
     _csvFiles.sort((a, b) {

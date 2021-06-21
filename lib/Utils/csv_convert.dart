@@ -18,7 +18,7 @@ getCsv(List associateList) async {
     row.add('Nama Istri');
     row.add('Bin/Bnt');
     row.add('Almarhum');
-    row.add('Almarhum');
+    row.add('Almarhumah');
     row.add('Alamat');
     row.add('No Telp');
     row.add('Kali');
@@ -48,14 +48,12 @@ getCsv(List associateList) async {
 
     String dir = (await getExternalStorageDirectory()).absolute.path;
     var file = "$dir";
-    print(file);
     File f = new File(file+"/${DateTime.now()}-backup.csv");
 
 // convert rows to String and write as csv file
 
     String csv = const ListToCsvConverter().convert(rows);
     f.writeAsString(csv);
-    print('success export');
   }
 
 

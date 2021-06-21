@@ -48,7 +48,6 @@ class HomeState extends State<Homepage> {
     super.initState();
     updateListView();
     if(restore == true){
-      print(guests);
       addImportGuest(guests);
     }
     if (notif == true) {
@@ -135,6 +134,7 @@ class HomeState extends State<Homepage> {
             backgroundColor: Colors.transparent,
             //key: scaffoldKey,
             appBar: AppBar(
+              iconTheme: IconThemeData(color: Colors.transparent),
               backgroundColor: Colors.transparent,
               elevation: 0,
             ),
@@ -472,7 +472,7 @@ class HomeState extends State<Homepage> {
                                                                     context);
                                                               },
                                                               child: Text(
-                                                                'TERPKAN',
+                                                                'TERAPKAN',
                                                                 style: textStyle.copyWith(
                                                                     fontWeight:
                                                                         FontWeight
@@ -658,7 +658,6 @@ class HomeState extends State<Homepage> {
           this.guestList = guestList;
           this.count = guestList.length;
         });
-        print(guestList.toString());
       });
     });
   }

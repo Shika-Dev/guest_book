@@ -194,7 +194,7 @@ class EntryFormState extends State<EntryForm> {
                         controller: alm2Controller,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                          labelText: 'Almarhum',
+                          labelText: 'Almarhumah',
                           labelStyle: TextStyle(color: Color(0xff40284A)),
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(color: Color(0xff40284A)),
@@ -334,7 +334,6 @@ class EntryFormState extends State<EntryForm> {
                                 kaliController.text,
                                 besarController.text,
                                 formattedDate);
-                            print('Success add data');
                           } else {
                             // ubah data
                             guest.name = nameController.text;

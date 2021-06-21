@@ -30,9 +30,6 @@ class LoadCsvDataScreen extends StatelessWidget {
       body: FutureBuilder(
         future: loadingCsvData(path),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-          List<dynamic> filteredList = snapshot.data
-              .where((element) => snapshot.data.indexOf(element) != 0)
-              .toList();
           return snapshot.hasData
               ? Center(
                   child: ElevatedButton(
@@ -45,6 +42,9 @@ class LoadCsvDataScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
+                    List<dynamic> filteredList = snapshot.data
+                        .where((element) => snapshot.data.indexOf(element) != 0)
+                        .toList();
                     DbHelper().deleteAll();
                     List<Guest> guests = new List<Guest>();
                     for(int i=0;i<filteredList.length;i++){
@@ -63,7 +63,7 @@ class LoadCsvDataScreen extends StatelessWidget {
                     }
                     Navigator.push(context,
                         MaterialPageRoute(
-                            builder: (_)=>Homepage(notif: true, message: 'Berhasi Import Data', guests: guests, restore: true,)
+                            builder: (_)=>Homepage(notif: true, message: 'Berhasi Import Data', guests: guests, restore: true)
                         ));
                   },
                   child: Text(
