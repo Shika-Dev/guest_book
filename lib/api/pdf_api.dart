@@ -1,7 +1,7 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -13,6 +13,9 @@ import 'package:sqflite/sqflite.dart';
 class PdfApi {
   static Future<File> generateTable() async {
     DbHelper dbHelper = DbHelper();
+    DateTime now = new DateTime.now();
+    var date = new DateFormat('dd-MM-yyy hh:mm:ss');
+    String formattedDate = date.format(now);
 
     final pdf = Document();
 
@@ -46,14 +49,49 @@ class PdfApi {
             ])
         .toList();
 
-    pdf.addPage(Page(
-      build: (context) => Table.fromTextArray(
-        headers: headers,
-        data: data,
-      ),
-    ));
+    pdf.addPage(MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        orientation: PageOrientation.landscape,
+        build: (context) => [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'FORM ASNAF',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 0.8 * PdfPageFormat.cm),
+                  Text(formattedDate),
+                  SizedBox(height: 0.8 * PdfPageFormat.cm),
+                ],
+              ),
+              buildInvoice(headers, data)
+            ]));
 
     return saveDocument(name: 'Form asnaf.pdf', pdf: pdf);
+  }
+
+  static Widget buildInvoice(headers, data) {
+    return Table.fromTextArray(
+      headers: headers,
+      data: data,
+      border: null,
+      headerStyle: TextStyle(fontWeight: FontWeight.bold),
+      headerDecoration: BoxDecoration(color: PdfColors.grey300),
+      cellHeight: 30,
+      cellAlignments: {
+        0: Alignment.centerLeft,
+        1: Alignment.centerLeft,
+        2: Alignment.centerLeft,
+        3: Alignment.centerLeft,
+        4: Alignment.centerLeft,
+        5: Alignment.centerLeft,
+        6: Alignment.centerLeft,
+        7: Alignment.centerLeft,
+        8: Alignment.centerLeft,
+        9: Alignment.centerLeft,
+      },
+    );
   }
 
   static Future<File> saveDocument({
