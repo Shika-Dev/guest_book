@@ -506,8 +506,9 @@ class HomeState extends State<Homepage> {
                             ),
                             SizedBox(height: size.height * .02),
                             Expanded(
-                                child:
-                                    noResult ? _noResult() : createListView()),
+                                child: noResult
+                                    ? _noSearchFound()
+                                    : createListView()),
                           ],
                         ),
                       ),
@@ -731,6 +732,53 @@ class HomeState extends State<Homepage> {
         Center(
             child: Text(
           'Tidak Ada Data',
+          style: TextStyle(
+              color: Color(0xff828282),
+              fontFamily: 'Nunito',
+              fontSize: 16,
+              fontWeight: FontWeight.w400),
+        )),
+        SizedBox(height: MediaQuery.of(context).size.height * .02),
+        ConstrainedBox(
+          constraints: BoxConstraints.tightFor(
+              height: 53, width: MediaQuery.of(context).size.width * .4),
+          child: ElevatedButton(
+            style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                        side: BorderSide.none)),
+                backgroundColor: MaterialStateProperty.all(Color(0xff50AC96))),
+            child: Text(
+              'Tambahkan Data',
+              style: TextStyle(color: Colors.white),
+              textScaleFactor: 1,
+            ),
+            onPressed: () async {
+              var guest = await navigateToEntryForm(context, null);
+              if (guest != null) addguest(guest);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _noSearchFound() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SizedBox(height: MediaQuery.of(context).size.height * .08),
+        Center(
+          child: Image.asset('assets/Images/Group_13.png',
+              width: MediaQuery.of(context).size.width * .6,
+              fit: BoxFit.fitWidth),
+        ),
+        SizedBox(height: MediaQuery.of(context).size.height * .02),
+        Center(
+            child: Text(
+          'Data tidak ditemukan',
           style: TextStyle(
               color: Color(0xff828282),
               fontFamily: 'Nunito',

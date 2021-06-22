@@ -10,6 +10,7 @@ import 'package:guest_book_app/model/model.dart';
 
 class PdfApi {
   static Future<File> generateTable() async {
+    var count = 1;
     DbHelper dbHelper = DbHelper();
     DateTime now = new DateTime.now();
     var date = new DateFormat('dd-MM-yyy hh:mm:ss');
@@ -34,7 +35,7 @@ class PdfApi {
 
     final data = users
         .map((user) => [
-              user.id,
+              count++,
               user.name,
               user.namaIstri,
               user.bin,
@@ -60,6 +61,8 @@ class PdfApi {
                   ),
                   SizedBox(height: 0.8 * PdfPageFormat.cm),
                   Text(formattedDate),
+                  SizedBox(height: 0.8 * PdfPageFormat.cm),
+                  Text('Jumlah data : ' + (count - 1).toString()),
                   SizedBox(height: 0.8 * PdfPageFormat.cm),
                 ],
               ),

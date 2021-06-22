@@ -31,47 +31,88 @@ class LoadCsvDataScreen extends StatelessWidget {
         future: loadingCsvData(path),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           return snapshot.hasData
-              ? Center(
-                  child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(size.width * .40, 44),
-                    primary: Color(0xff2C977D),
-                    onPrimary: Color(0xff2C977D),
-                    side: BorderSide(
-                      color: Color(0xff2C977D),
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset('assets/Images/Group_17.png',
+                        width: MediaQuery.of(context).size.width * .5,
+                        fit: BoxFit.fitWidth),
+                    SizedBox(height: MediaQuery.of(context).size.height * .02),
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+                      child: Text(
+                        'Penting !',
+                        style: textStyle.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: Colors.red,
+                            fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
-                  ),
-                  onPressed: () {
-                    List<dynamic> filteredList = snapshot.data
-                        .where((element) => snapshot.data.indexOf(element) != 0)
-                        .toList();
-                    DbHelper().deleteAll();
-                    List<Guest> guests = new List<Guest>();
-                    for(int i=0;i<filteredList.length;i++){
-                      guests.add(Guest(
-                        filteredList[i][0].toString(),
-                        filteredList[i][1].toString(),
-                        filteredList[i][2].toString(),
-                        filteredList[i][3].toString(),
-                        filteredList[i][4].toString(),
-                        filteredList[i][5].toString(),
-                        filteredList[i][6].toString(),
-                        filteredList[i][7].toString(),
-                        filteredList[i][8].toString(),
-                        filteredList[i][9].toString(),
-                      ));
-                    }
-                    Navigator.push(context,
-                        MaterialPageRoute(
-                            builder: (_)=>Homepage(notif: true, message: 'Berhasi Import Data', guests: guests, restore: true)
-                        ));
-                  },
-                  child: Text(
-                    'Import Data',
-                    style: textStyle.copyWith(
-                        fontWeight: FontWeight.w700, color: Colors.white),
-                  ),
-                ))
+                    Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 28, vertical: 8),
+                      child: Text(
+                        'Dengan melakukan import data maka data yang tersedia sekarang akan terhapus. Data akan digantikan oleh data hasil import data.',
+                        style: textStyle.copyWith(
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black,
+                            height: 1.4,
+                            fontSize: 14),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * .04),
+                    Container(
+                        child: TextButton(
+                      style: TextButton.styleFrom(
+                        minimumSize: Size(size.width * .40, 44),
+                        primary: Color(0xff2C977D),
+                        side: BorderSide(
+                          color: Color(0xff2C977D),
+                        ),
+                      ),
+                      onPressed: () {
+                        List<dynamic> filteredList = snapshot.data
+                            .where((element) =>
+                                snapshot.data.indexOf(element) != 0)
+                            .toList();
+                        DbHelper().deleteAll();
+                        List<Guest> guests = new List<Guest>();
+                        for (int i = 0; i < filteredList.length; i++) {
+                          guests.add(Guest(
+                            filteredList[i][0].toString(),
+                            filteredList[i][1].toString(),
+                            filteredList[i][2].toString(),
+                            filteredList[i][3].toString(),
+                            filteredList[i][4].toString(),
+                            filteredList[i][5].toString(),
+                            filteredList[i][6].toString(),
+                            filteredList[i][7].toString(),
+                            filteredList[i][8].toString(),
+                            filteredList[i][9].toString(),
+                          ));
+                        }
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => Homepage(
+                                    notif: true,
+                                    message: 'Berhasi Import Data',
+                                    guests: guests,
+                                    restore: true)));
+                      },
+                      child: Text(
+                        'Import Data',
+                        style: textStyle.copyWith(
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xff2C977D)),
+                      ),
+                    )),
+                  ],
+                )
               : Center(
                   child: CircularProgressIndicator(),
                 );
