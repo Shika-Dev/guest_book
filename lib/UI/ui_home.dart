@@ -9,6 +9,7 @@ import 'package:guest_book_app/Utils/all_csv.dart';
 import 'package:guest_book_app/Utils/csv_convert.dart';
 import 'package:guest_book_app/model/model.dart';
 import 'package:guest_book_app/helper/database.dart';
+import 'package:guest_book_app/api/pdf_api.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -21,7 +22,13 @@ class Homepage extends StatefulWidget {
   final List<Guest> guests;
   final bool restore;
 
-  Homepage({Key key, this.notif = false, this.message = '', this.guests, this.restore=false}) : super(key: key);
+  Homepage(
+      {Key key,
+      this.notif = false,
+      this.message = '',
+      this.guests,
+      this.restore = false})
+      : super(key: key);
   @override
   HomeState createState() => HomeState(notif, message, guests, restore);
 }
@@ -47,7 +54,7 @@ class HomeState extends State<Homepage> {
   void initState() {
     super.initState();
     updateListView();
-    if(restore == true){
+    if (restore == true) {
       addImportGuest(guests);
     }
     if (notif == true) {
@@ -342,10 +349,11 @@ class HomeState extends State<Homepage> {
                                                                     fillColor:
                                                                         Colors
                                                                             .white,
-                                                                    contentPadding:
-                                                                        EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                0, horizontal: 16),
+                                                                    contentPadding: EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            0,
+                                                                        horizontal:
+                                                                            16),
                                                                     border: OutlineInputBorder(
                                                                         borderRadius:
                                                                             BorderRadius.circular(
@@ -397,10 +405,11 @@ class HomeState extends State<Homepage> {
                                                                     DateTimePicker(
                                                                   decoration:
                                                                       InputDecoration(
-                                                                    contentPadding:
-                                                                        EdgeInsets.symmetric(
-                                                                            vertical:
-                                                                                0, horizontal: 16),
+                                                                    contentPadding: EdgeInsets.symmetric(
+                                                                        vertical:
+                                                                            0,
+                                                                        horizontal:
+                                                                            16),
                                                                     filled:
                                                                         true,
                                                                     fillColor:
@@ -584,7 +593,7 @@ class HomeState extends State<Homepage> {
         ),
         // FAB 2
         SpeedDialChild(
-            child: Icon(Icons.ios_share, color: Colors.white),
+            child: Icon(Icons.cloud_upload_outlined, color: Colors.white),
             backgroundColor: Color(0xff50AC96),
             onTap: () {
               getCsv(guestList);
@@ -597,6 +606,20 @@ class HomeState extends State<Homepage> {
                           message:
                               "Berhasil Disimpan di Android/data/com.example.guest_book_app/files")));
             },
+            label: 'Backup Data',
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: Color(0xff50AC96)),
+        SpeedDialChild(
+            child: Icon(Icons.ios_share, color: Colors.white),
+            backgroundColor: Color(0xff50AC96),
+            onTap: () async {
+              final pdfFile = await PdfApi.generateTable();
+
+              PdfApi.openFile(pdfFile);
+            },
             label: 'Export Data',
             labelStyle: TextStyle(
                 fontWeight: FontWeight.w500,
@@ -607,8 +630,8 @@ class HomeState extends State<Homepage> {
             child: Icon(Icons.cloud_download_outlined, color: Colors.white),
             backgroundColor: Color(0xff50AC96),
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => AllCsvFilesScreen()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => AllCsvFilesScreen()));
             },
             label: 'Import Data',
             labelStyle: TextStyle(
@@ -628,8 +651,10 @@ class HomeState extends State<Homepage> {
     }
   }
 
-  void addImportGuest(List<Guest> guests) async{
-    guests.forEach((element) {addguest(element);});
+  void addImportGuest(List<Guest> guests) async {
+    guests.forEach((element) {
+      addguest(element);
+    });
   }
 
   //edit guest

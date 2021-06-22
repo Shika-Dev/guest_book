@@ -7,7 +7,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:guest_book_app/model/model.dart';
 //pubspec.yml
 
-
 //kelass Dbhelper
 class DbHelper {
   static DbHelper _dbHelper;
@@ -23,7 +22,6 @@ class DbHelper {
   }
 
   Future<Database> initDb() async {
-
     //untuk menentukan nama database dan lokasi yg dibuat
     Directory directory = await getApplicationDocumentsDirectory();
     String path = directory.path + 'guest.db';
@@ -73,25 +71,24 @@ class DbHelper {
     int count = await db.insert('guest', object.toMap());
     return count;
   }
+
 //update databases
   Future<int> update(Guest object) async {
     Database db = await this.database;
-    int count = await db.update('guest', object.toMap(),
-        where: 'id=?',
-        whereArgs: [object.id]);
+    int count = await db
+        .update('guest', object.toMap(), where: 'id=?', whereArgs: [object.id]);
     return count;
   }
 
-  void deleteAll() async{
+  void deleteAll() async {
     Database db = await this.database;
     db.delete('guest');
   }
+
 //delete databases
   Future<int> delete(int id) async {
     Database db = await this.database;
-    int count = await db.delete('guest',
-        where: 'id=?',
-        whereArgs: [id]);
+    int count = await db.delete('guest', where: 'id=?', whereArgs: [id]);
     return count;
   }
 
@@ -99,10 +96,9 @@ class DbHelper {
     var guestMapList = await select();
     int count = guestMapList.length;
     List<Guest> guestList = List<Guest>();
-    for (int i=0; i<count; i++) {
+    for (int i = 0; i < count; i++) {
       guestList.add(Guest.fromMap(guestMapList[i]));
     }
     return guestList;
   }
-
 }
